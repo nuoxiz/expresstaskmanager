@@ -1,8 +1,14 @@
+require("dotenv").config();
 const nodemailer = require("nodemailer");
-const userEmail = "kzwebdev123@outlook.com";
-const password = "webdev456@";
+
+const userEmail = process.env.EMAIL;
+const password = process.env.PASSWORD;
+
+console.log("email: " + userEmail);
+console.log("password: " + password);
 //transport has the sender information for authentication
 const transport = nodemailer.createTransport({
+
   host: "smtp.office365.com",
   port: 587,
   service: "hotmail",
@@ -13,7 +19,10 @@ const transport = nodemailer.createTransport({
 });
 
 const sendChangePasswordEmail = (name, email, userId) => {
-  transport.sendMail(
+    console.log("email: " + userEmail);
+    console.log("password: " + password);
+    console.log("email is called")
+    transport.sendMail(
     {
       from: userEmail,
       to: email,

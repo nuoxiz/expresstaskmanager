@@ -1,6 +1,8 @@
 const nodemailer = require("nodemailer");
-const userEmail = "kzwebdev123@outlook.com";
-const password = "webdev456@";
+require("dotenv").config();
+const userEmail = process.env.EMAIL;
+const password = process.env.PASSWORD;
+
 //transport has the sender information for authentication
 const transport = nodemailer.createTransport({
   host: "smtp.office365.com",

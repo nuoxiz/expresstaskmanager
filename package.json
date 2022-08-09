@@ -1,4 +1,12 @@
 {
+  "name": "express-task-manager",
+  "version": "1.0.0",
+  "engines": {
+    "node": "16.16.0",
+    "npm": "8.14.0"
+  },
+  "description": "Full stack task manager",
+  "main": "server.js",
   "dependencies": {
     "assert": "^2.0.0",
     "bcryptjs": "^2.4.3",
@@ -25,24 +33,16 @@
     "url": "^0.11.0",
     "util": "^0.12.4"
   },
-  "name": "express-task-manager",
-  "version": "1.0.0",
-  "engines": {
-    "node": "16.x",
-    "npm": "8.x"
-  },
-  "description": "Full stack task manager",
-  "main": "server.js",
-  "devDependencies": {
-    "concurrently": "^7.3.0",
-    "nodemon": "^2.0.19"
-  },
   "scripts": {
     "start": "node backend/server.js",
     "server": "nodemon backend/server.js",
     "client": "npm start --prefix frontend",
     "dev": "concurrently \"npm run server\" \"npm run client\" ",
     "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install --prefix frontend && npm run build --prefix frontend"
+  },
+  "devDependencies": {
+    "concurrently": "^7.3.0",
+    "nodemon": "^2.0.19"
   },
   "author": "Nuoxi Zhang",
   "license": "ISC"

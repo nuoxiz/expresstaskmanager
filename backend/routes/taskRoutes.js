@@ -1,38 +1,31 @@
 const mongoose = require("mongoose");
-const userSchema = mongoose.Schema(
+
+const taskSchema = mongoose.Schema(
   {
-    name: {
-      type: String,
-      required: [true, "Please enter an username"],
+    user: {
+      type: mongoose.Schema.Types.ObjectId,
+      required: true,
+      ref: "UserModel", // referring the model
     },
-    email: {
+    task: {
       type: String,
-      required: [true, "Please enter an email"],
-      unique: true,
+      required: [true, "Please enter a task name"],
     },
-    password: {
+    description: {
       type: String,
-      required: [true, "Please enter a password"],
+      required: false,
     },
-    status: {
-      type: String,
-      enum: ["Pending", "Active"],
-      default: "Pending",
+    dueDateTime: {
+      type: Date,
+      required: false,
     },
-    confirmationCode: {
-      type: String,
-      unique: true,
+    isImportant: {
+      type: Boolean,
+      required: false,
     },
-    roles: [
-      {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "Role",
-      },
-    ],
   },
   {
     timestamps: true,
   }
 );
-
-module.exports = mongoose.model("UserModel", userSchema);
+module.exports = mongoose.model("Task", taskSchema);

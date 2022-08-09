@@ -3,7 +3,6 @@ const UserModel = require("../models/userModel");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
 const { sendConfirmationEmail } = require("../email/nodeMailerConfig");
-const userModel = require("../models/userModel");
 const { sendChangePasswordEmail } = require("../email/changePasswordEmail");
 
 /**
@@ -181,6 +180,7 @@ const changePassword = asyncHandler(async (req, res) => {
  * @route GET /api/users/changePassword/:userId
  */
 const sendChangePassword = asyncHandler(async (req, res) => {
+    const user = req.body
   sendChangePasswordEmail(user.name, user.email, user._id);
 });
 
