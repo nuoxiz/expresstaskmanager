@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-
+require("dotenv").config();
 /**
  * @desc Connect to MongoDB cluster
  * @acess private
@@ -7,7 +7,7 @@ const mongoose = require("mongoose");
 
 const connectDB = async () => {
   try {
-    const connect = await mongoose.connect(process.env.MONGO_DB);
+    const connect = await mongoose.connect(process.env.MONGO_URI);
     // print output
     console.log(`MongoDB Connected: ${connect.connection.host}`.cyan.underline);
   } catch (error) {
