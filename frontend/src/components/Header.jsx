@@ -14,7 +14,6 @@ const Header = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const onClick = () => {
-    // dispatch(reset());
     dispatch(logout());
     dispatch(reset());
     navigate("/");
