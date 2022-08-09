@@ -22,15 +22,14 @@ app.use("/api/tasks", taskRoutes);
 
 if (process.env.NODE_ENV === "production") {
   app.use(express.static(path.join(__dirname, "../frontend/build")));
-  app.get("*", (req, res) => {
+  // "*" means any route aside from our api routes
+  app.get("*", (req, res) =>
     res.sendFile(
-      path.resolve(__dirname, "../", "frontend", "build", "index.html")
-    );
-  });
+      path.resolve(__dirname, "../", "frontend", "build", "inded.html")
+    )
+  );
 } else {
-  app.get("/", (req, res) => {
-    res.send("Please set to production.");
-  });
+  app.get("/", (req, res) => res.send("Please set to production"));
 }
 
 //Use custom-made error handler to override the default handler
