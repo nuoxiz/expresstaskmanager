@@ -66,7 +66,7 @@ export const deleteTask = createAsyncThunk(
       const token = thunkAPI.getState().auth.user.token;
       return await taskService.deleteTask(token, taskID);
     } catch (error) {
-      const message =
+      let message =
         (error.response &&
           error.response.data &&
           error.response.data.message) ||

@@ -27,7 +27,7 @@ const Dashboard = ({ setFullTask, context }) => {
       toast.error(message);
     }
     dispatch(reset());
-  }, [user, isError, message, dispatch, shouldRerender]);
+  }, [user, isError, message, dispatch, shouldRerender, navigate]);
 
   if (isLoading) {
     <Spinner />;
