@@ -125,7 +125,7 @@ const loginUser = asyncHandler(async (req, res) => {
 
 const verifyUser = asyncHandler(async (req, res) => {
   const code = req.params.confirmationCode;
-  const user = await userModel.findOne({ confirmationCode: code });
+  const user = await UserModel.findOne({ confirmationCode: code });
   if (!user) {
     res.status(400).json({ message: "User Not Found" });
     throw new Error("User Not Found");
