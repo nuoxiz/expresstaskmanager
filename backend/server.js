@@ -25,7 +25,7 @@ if (process.env.NODE_ENV === "production") {
   // "*" means any route aside from our api routes
   app.get("*", (req, res) =>
     res.sendFile(
-      path.resolve(__dirname, "../", "frontend", "build", "inded.html")
+      path.resolve(__dirname, "../", "frontend", "build", "index.html")
     )
   );
 } else {
