@@ -1,31 +1,19 @@
-const mongoose = require("mongoose");
+const express = require("express");
+const { protectRoute } = require("../middlewares/authMiddleware");
+const {
+  getAllTask,
+  createTask,
+  deleteTask,
+  updateTask,
+  getTask,
+} = require("../controllers/taskControllers");
+const router = express.Router();
 
-const taskSchema = mongoose.Schema(
-  {
-    user: {
-      type: mongoose.Schema.Types.ObjectId,
-      required: true,
-      ref: "UserModel", // referring the model
-    },
-    task: {
-      type: String,
-      required: [true, "Please enter a task name"],
-    },
-    description: {
-      type: String,
-      required: false,
-    },
-    dueDateTime: {
-      type: Date,
-      required: false,
-    },
-    isImportant: {
-      type: Boolean,
-      required: false,
-    },
-  },
-  {
-    timestamps: true,
-  }
-);
-module.exports = mongoose.model("Task", taskSchema);
+router.route("/").get(protectRoute, getAllTask).post(protectRoute, createTask);
+router
+  .route("/:id")
+  .delete(protectRoute, deleteTask)
+  .put(protectRoute, updateTask)
+  .get(protectRoute, getTask);
+
+module.exports = router;
