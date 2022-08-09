@@ -29,7 +29,6 @@ const AskForEmail = () => {
     }
     if (isSuccess) {
       const user = JSON.parse(localStorage.getItem("user"));
-      console.log("user in frontend: " + JSON.stringify(user));
       setIsEmailSend(true);
       authService.sendChangePasswordEmail(user);
       dispatch(logout());

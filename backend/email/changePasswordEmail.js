@@ -4,8 +4,6 @@ const nodemailer = require("nodemailer");
 const userEmail = process.env.EMAIL;
 const password = process.env.PASSWORD;
 
-console.log("email: " + userEmail);
-console.log("password: " + password);
 //transport has the sender information for authentication
 const transport = nodemailer.createTransport({
 
@@ -19,9 +17,6 @@ const transport = nodemailer.createTransport({
 });
 
 const sendChangePasswordEmail = (name, email, userId) => {
-    console.log("email: " + userEmail);
-    console.log("password: " + password);
-    console.log("email is called")
     transport.sendMail(
     {
       from: userEmail,
