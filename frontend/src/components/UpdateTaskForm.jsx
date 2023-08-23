@@ -45,8 +45,10 @@ const UpdateTaskForm = ({ context }) => {
     if (e.target.name === "checkbox") {
       setFormData({ ...formData, isImportant: e.currentTarget.checked });
     } else {
+
       setFormData({ ...formData, [e.target.name]: e.target.value });
     }
+
   };
 
   useEffect(() => {
@@ -66,10 +68,9 @@ const UpdateTaskForm = ({ context }) => {
       _id: localStorageTask._id,
       task: taskName,
       description,
-      dueDateTime,
-      isImportant,
+      dueDateTime: dueDateTime == "No specific date" ? null : dueDateTime,
+      isImportant: isImportant ? isImportant : false,
     };
-
     dispatch(updateTask(updatedTask));
     // setShowUpdateForm(!showUpdateForm);
     dispatch(changeShouldRerender());
@@ -77,7 +78,7 @@ const UpdateTaskForm = ({ context }) => {
     setTimeout(() => {
       dispatch(changeShouldRerender());
     }, 1);
-    toast.info(`Updated task: ${updatedTask.taskName}`, {
+    toast.info(`Updated task: ${updatedTask.task}`, {
       position: "bottom-right",
       autoClose: 2000,
       hideProgressBar: false,

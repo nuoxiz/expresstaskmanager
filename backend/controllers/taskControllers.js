@@ -75,7 +75,9 @@ const createTask = asyncHandler(async (req, res) => {
  * @access Private
  */
 const updateTask = asyncHandler(async (req, res) => {
+
   const task = await Task.findById(req.params.id);
+
   // Have to check that 1. task exist, 2. user exist, 3. task.user === user.id
   if (!task) {
     res.status(400).json({ message: "Task Not Found; Invalid ID" });
@@ -89,13 +91,25 @@ const updateTask = asyncHandler(async (req, res) => {
     res.status(400).json({ message: "User not authorized; invalid task ID" });
     throw new Error("User not authorized; invalid task ID");
   }
-  const updatedTask = await Task.findByIdAndUpdate(req.params.id, req.body, {
+
+  const newData = {
+    user: req.user._id,
+    task: req.body.task,
+    description: req.body.description,
+    dueDateTime:
+      req.body.dueDateTime == null || req.body.dueDateTime == ""
+        ? null
+        : req.body.dueDateTime,
+    isImportant: req.body.isImportant,
+  };
+
+  const updatedTask = await Task.findByIdAndUpdate(req.params.id, newData, {
     new: true,
   });
 
-  if (updatedTask) {
-    res.status(200).json(updatedTask);
-  }
+  // if (updatedTask) {
+  res.status(200).json(newData.task);
+  // }
 });
 
 /**
