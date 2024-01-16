@@ -9,7 +9,8 @@ const Task = require("../models/taskModel");
  */
 
 const getAllTask = asyncHandler(async (req, res) => {
-  const tasks = await Task.find({ user: req.user.id });
+  // console.log(req.user);
+  const tasks = await Task.find({ user: req.user._id });
   res.status(200).json(tasks);
 });
 /**
@@ -75,7 +76,6 @@ const createTask = asyncHandler(async (req, res) => {
  * @access Private
  */
 const updateTask = asyncHandler(async (req, res) => {
-
   const task = await Task.findById(req.params.id);
 
   // Have to check that 1. task exist, 2. user exist, 3. task.user === user.id

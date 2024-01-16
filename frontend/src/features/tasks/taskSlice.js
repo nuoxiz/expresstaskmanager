@@ -112,6 +112,7 @@ export const updateTask = createAsyncThunk(
   "tasks/update",
   async (newData, thunkAPI) => {
     try {
+      // getState allow us to get any state in the store
       const token = thunkAPI.getState().auth.user.token;
       return await taskService.updateTask(token, newData, newData._id);
     } catch (error) {
@@ -130,7 +131,11 @@ export const taskSlice = createSlice({
   name: "task",
   initialState,
   reducers: {
+    // for synchronous functions
     reset: (state) => {
+      // createSlice allow us to write mutating code and handle the 
+      // copying of the state for us and apply the following mutations
+      //  for us
       state.isLoading = false;
       state.isSuccess = false;
       state.isError = false;
@@ -141,6 +146,7 @@ export const taskSlice = createSlice({
     },
   },
   extraReducers: (builder) => {
+    // for  asynchronouse functions
     builder
       .addCase(getAllTasks.pending, (state) => {
         state.isLoading = true;
@@ -153,6 +159,7 @@ export const taskSlice = createSlice({
       .addCase(getAllTasks.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = true;
+        // action.payload = return thunkAPI.rejectWithValue(message)
         state.message = action.payload;
       })
       .addCase(deleteTask.pending, (state) => {
@@ -161,7 +168,7 @@ export const taskSlice = createSlice({
       .addCase(deleteTask.fulfilled, (state, action) => {
         state.isLoading = false;
         state.isSuccess = true;
-        // When we delete a task from the server, the server return the id of the task we just deleted
+        // When we delete a task from the server, the server return the id of the task we just deleted/ returned value from the functions
         state.tasks = state.tasks.map((task) => task._id !== action.payload);
       })
       .addCase(deleteTask.rejected, (state, action) => {

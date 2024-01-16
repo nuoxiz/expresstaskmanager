@@ -1,5 +1,5 @@
 /**
- * @desc Override the default error handler to customize output
+ * @desc Override the default express error handler to customize output
  */
 const errorHandler = (err, req, res, next) => {
   // if we already have set the status code in the response to the user then use that status code else use 500

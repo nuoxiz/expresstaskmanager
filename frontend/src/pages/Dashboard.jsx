@@ -21,7 +21,7 @@ const Dashboard = ({ setFullTask, context }) => {
       navigate("/login");
     }
     if (user) {
-      dispatch(getAllTasks());
+            dispatch(getAllTasks());
     }
     if (isError) {
       toast.error(message);

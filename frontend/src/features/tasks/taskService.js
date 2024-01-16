@@ -9,7 +9,7 @@ const API_URI = "/api/tasks/";
  */
 
 const getAllTasks = async (token) => {
-  const config = {
+    const config = {
     headers: {
       Authorization: `Bearer ${token}`,
     },

@@ -22,8 +22,8 @@ const Header = () => {
   return (
     <header>
       <div className="logo">
-        <Link to="/" title="Home">
-          Express Manager
+        <Link to="/" title="Home" className="logo-image">
+          <img src="Logo.png" alt="Logo" className="logo-image" />
         </Link>
       </div>
       {user ? (

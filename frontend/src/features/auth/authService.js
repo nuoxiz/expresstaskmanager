@@ -12,6 +12,7 @@ const login = async (userDetails) => {
   // Sending a POST request to /api/users/login will trigger the path in server.js and the corresponding controller
   const res = await axios.post(API_URI + "login", userDetails);
   if (res.data) {
+    // local storage stores string only
     localStorage.setItem("user", JSON.stringify(res.data));
     return res.data;
   }

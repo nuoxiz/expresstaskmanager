@@ -45,10 +45,8 @@ const UpdateTaskForm = ({ context }) => {
     if (e.target.name === "checkbox") {
       setFormData({ ...formData, isImportant: e.currentTarget.checked });
     } else {
-
       setFormData({ ...formData, [e.target.name]: e.target.value });
     }
-
   };
 
   useEffect(() => {
@@ -68,7 +66,7 @@ const UpdateTaskForm = ({ context }) => {
       _id: localStorageTask._id,
       task: taskName,
       description,
-      dueDateTime: dueDateTime == "No specific date" ? null : dueDateTime,
+      dueDateTime: dueDateTime === "No specific date" ? null : dueDateTime,
       isImportant: isImportant ? isImportant : false,
     };
     dispatch(updateTask(updatedTask));

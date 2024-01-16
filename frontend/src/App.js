@@ -111,8 +111,9 @@ function App() {
               <Route path="/*" element={<PageNotFound />}></Route>
             </Routes>
           </UserContext.Provider>
-          <Footer />
+          {/* <Footer /> */}
         </div>
+        <Footer />
       </Router>
       <ToastContainer />
     </>
