@@ -12,16 +12,10 @@ const protectRoute = asyncHandler(async (req, res, next) => {
   ) {
     try {
       token = req.headers.authorization.split(" ")[1];
-
-      // Verify the token
+      // Verify and decode the token
       const decoded = jwt.verify(token, process.env.JWT_SECRET);
-
-      /**
-       * Only have token after sign in, and by assigning to req.user, all req after sign in have access to the req.user data
-       */
-
+      // Find the user based on the id in the JWT
       req.user = await UserModel.findById(decoded.id).select("-password");
-
       next();
     } catch (error) {
       console.log(error);
@@ -34,4 +28,8 @@ const protectRoute = asyncHandler(async (req, res, next) => {
     throw new Error("Not Authorized, no token");
   }
 });
+
+
+
+
 module.exports = { protectRoute };

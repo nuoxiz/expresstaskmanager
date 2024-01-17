@@ -1,9 +1,8 @@
 import TaskItem from "./TaskItem";
 
-const TasksContainer = ({ tasks, setFullTask, context }) => {
+const TasksContainer = ({ tasks}) => {
   return (
     <div className="task-container">
-      {console.log(typeof tasks)}
       {tasks.message === null ? (
         <h1>No task...</h1>
       ) : (
@@ -11,8 +10,7 @@ const TasksContainer = ({ tasks, setFullTask, context }) => {
           <TaskItem
             key={index}
             task={task}
-            setFullTask={setFullTask}
-            context={context}
+          
           />
         ))
       )}

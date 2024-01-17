@@ -7,7 +7,7 @@ import TasksContainer from "../components/TasksContainer";
 import { toast } from "react-toastify";
 import Spinner from "../components/Spinner";
 import { useNavigate } from "react-router-dom";
-const Dashboard = ({ setFullTask, context }) => {
+const Dashboard = () => {
   const [showAddTaskForm, setShowAddTaskForm] = useState(false);
   const { tasks, isLoading, isError, message, shouldRerender } = useSelector(
     (state) => state.task
@@ -45,8 +45,6 @@ const Dashboard = ({ setFullTask, context }) => {
       ) : (
         <TasksContainer
           tasks={tasks}
-          setFullTask={setFullTask}
-          context={context}
         />
       )}
     </div>

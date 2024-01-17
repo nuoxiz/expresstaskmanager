@@ -9,9 +9,12 @@ const Task = require("../models/taskModel");
  */
 
 const getAllTask = asyncHandler(async (req, res) => {
-  // console.log(req.user);
   const tasks = await Task.find({ user: req.user._id });
-  res.status(200).json(tasks);
+  if (!tasks) {
+    res.status(401).json({ message: "No task found." });
+  } else {
+    res.status(200).json(tasks);
+  }
 });
 /**
  * @desc Find and return the specific task with the id passed in
@@ -22,15 +25,15 @@ const getTask = asyncHandler(async (req, res) => {
   const task = await Task.findById(req.params.id);
   if (!task) {
     res.status(400).json({ message: "Task Not Found; Invalid ID" });
-    throw new Error("Task Not Found; Invalid ID");
+    return;
   }
   if (!req.user) {
     res.status(400).json({ message: "You are not logged in." });
-    throw new Error("You are not logged in.");
+    return;
   }
   if (task.user.toString() !== req.user.id) {
     res.status(400).json({ message: "User not authorized; invalid task ID" });
-    throw new Error("User not authorized; invalid task ID");
+    return;
   }
   if (task) {
     res.status(200).json(task);
@@ -47,7 +50,7 @@ const createTask = asyncHandler(async (req, res) => {
   let modifiedDueDateTime;
   if (!task) {
     res.status(400);
-    throw new Error("Task must have a name");
+    return;
   }
   if (dueDateTime) {
     modifiedDueDateTime = new Date(dueDateTime);
@@ -65,8 +68,7 @@ const createTask = asyncHandler(async (req, res) => {
     // Send the new task to the user
     res.json(newTask).status(200);
   } else {
-    res.status(400);
-    throw new Error("Something went wrong. Couldn't create a new task");
+    res.status(400).json({ message: "Something went wrong!" });
   }
 });
 
@@ -81,15 +83,15 @@ const updateTask = asyncHandler(async (req, res) => {
   // Have to check that 1. task exist, 2. user exist, 3. task.user === user.id
   if (!task) {
     res.status(400).json({ message: "Task Not Found; Invalid ID" });
-    throw new Error("Task Not Found; Invalid ID");
+    return;
   }
   if (!req.user) {
     res.status(400).json({ message: "You are not logged in." });
-    throw new Error("You are not logged in.");
+    return;
   }
   if (task.user.toString() !== req.user.id) {
     res.status(400).json({ message: "User not authorized; invalid task ID" });
-    throw new Error("User not authorized; invalid task ID");
+    return;
   }
 
   const newData = {
@@ -107,9 +109,9 @@ const updateTask = asyncHandler(async (req, res) => {
     new: true,
   });
 
-  // if (updatedTask) {
-  res.status(200).json(newData.task);
-  // }
+  if (updatedTask) {
+    res.status(200).json(newData.task);
+  }
 });
 
 /**
@@ -122,21 +124,22 @@ const deleteTask = asyncHandler(async (req, res) => {
   const task = await Task.findById(req.params.id);
   if (!task) {
     res.status(400).json({ message: "Failed to delete task; Task not found" });
-    throw new Error("Failed to delete task; Task not found");
+    return;
   }
   if (!req.user) {
     res
       .status(400)
       .json({ message: "Failed to delete task; Please log in first" });
-    throw new Error("Failed to delete task; Please log in first");
+    return;
   }
 
   if (req.user.id !== task.user.toString()) {
     res
       .status(400)
       .json({ message: "Failed to delete task; User not authorized" });
-    throw new Error("Failed to delete task; User not authorized");
+    return;
   }
+  // remove the task
   task.remove();
   res.status(200).json({ _id: req.params.id });
 });

@@ -20,7 +20,7 @@ const getUserByEmail = asyncHandler(async (req, res) => {
   const user = await UserModel.findOne({ email });
   if (!user) {
     res.status(400).json({ message: "No user is associated with this email" });
-    throw new Error("No user is associated with this email");
+    return;
   }
   res.status(200).json(user);
 });
@@ -34,13 +34,13 @@ const registerUser = asyncHandler(async (req, res) => {
   const { name, email, password } = req.body;
   //Check if any field is empty
   if (!name || !email || !password) {
-    res.status(400);
-    throw new Error("Please enter all the fields");
+    res.status(400).json({ message: "Please enter all the fields" });
+    return;
   }
   // Check if the email is already registered
   if (await UserModel.findOne({ email })) {
     res.status(400).json({ message: "Email already registered" });
-    throw new Error("Email already registered");
+    return;
   }
   // Hash the password to protect it in data leakage
   const salt = await bcrypt.genSalt(11);
@@ -95,7 +95,7 @@ const loginUser = asyncHandler(async (req, res) => {
       res
         .status(401)
         .json({ message: "Pending Account. Please Verify Your Email" });
-      throw new Error("Pending Account. Please Verify Your Email");
+      return;
     }
     if (await bcrypt.compare(password, user.password)) {
       res.status(200).json({
@@ -105,15 +105,12 @@ const loginUser = asyncHandler(async (req, res) => {
         token: generateToken(user._id),
         status: user.status,
       });
-      // res.status(200).json({ message: "You have logged in" });
     } else {
       // send json object so that toast can display the message
       res.status(400).json({ message: "Failed to login: Invalid password" });
-      throw new Error("Failed to login: Invalid password");
     }
   } else {
     res.status(400).json({ message: "Failed to login: Invalid credentials" });
-    throw new Error("Failed to login: Invalid credentials");
   }
 });
 
@@ -128,7 +125,7 @@ const verifyUser = asyncHandler(async (req, res) => {
   const user = await UserModel.findOne({ confirmationCode: code });
   if (!user) {
     res.status(400).json({ message: "User Not Found" });
-    throw new Error("User Not Found");
+    return;
   } else {
     await UserModel.findOneAndUpdate(
       { confirmationCode: code },
@@ -155,7 +152,7 @@ const changePassword = asyncHandler(async (req, res) => {
   const user = await UserModel.findById(_id);
   if (!user) {
     res.status(400).json({ message: "User not found" });
-    throw new Error("User not found");
+    return;
   } else {
     const salt = await bcrypt.genSalt(11);
     const hashedPassword = await bcrypt.hash(newPassword, salt);
@@ -170,7 +167,6 @@ const changePassword = asyncHandler(async (req, res) => {
       res
         .status(400)
         .json({ message: "Failed to Change Password. Please try again" });
-      throw new Error("Failed to Change Password. Please try again");
     }
   }
 });
@@ -180,7 +176,7 @@ const changePassword = asyncHandler(async (req, res) => {
  * @route GET /api/users/changePassword/:userId
  */
 const sendChangePassword = asyncHandler(async (req, res) => {
-    const user = req.body
+  const user = req.body;
   sendChangePasswordEmail(user.name, user.email, user._id);
 });
 
@@ -192,6 +188,8 @@ const generateToken = (userId) => {
     expiresIn: "30d",
   });
 };
+
+
 const updateConfirmationCode = asyncHandler(async (userId, newData) => {
   try {
     await UserModel.findByIdAndUpdate(userId, newData, { new: true });

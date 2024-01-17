@@ -13,6 +13,7 @@ const TaskExpand = () => {
   };
   return (
     <div className="full-task">
+      {console.log("TaskExpand openned")}
       <h1>{task.task ? task.task : "No Task Name..."}</h1>
       <div className="text">
         <b>Due:</b>

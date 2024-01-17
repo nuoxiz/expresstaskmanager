@@ -7,10 +7,8 @@ import {
 import { useDispatch } from "react-redux";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
-import { useContext } from "react";
 import { useState } from "react";
-const TaskItem = ({ task, setFullTask, context }) => {
-  const fullTask = useContext(context);
+const TaskItem = ({ task }) => {
 
   const [showUpdateFormAfterDeletion, setShowUpdateFormAfterDeletion] =
     useState(false);
@@ -65,15 +63,7 @@ const TaskItem = ({ task, setFullTask, context }) => {
             className="edit-btn"
             title="Edit"
             onClick={() => {
-              setFullTask({
-                ...fullTask,
-                _id: task._id,
-                task: task.task,
-                dueDateTime: modifiedDate,
-                description: task.description,
-                isImportant: task.isImportant,
-              });
-
+              localStorage.setItem("fullTask", JSON.stringify(task));
               dispatch(getTask(task._id));
               navigate("/updateTask");
             }}
@@ -82,14 +72,6 @@ const TaskItem = ({ task, setFullTask, context }) => {
             className="open-btn"
             title="Expand"
             onClick={() => {
-              setFullTask({
-                ...fullTask,
-                task: task.task,
-                dueDateTime: modifiedDate,
-                description: task.description,
-                isImportant: task.isImportant,
-              });
-
               dispatch(getTask(task._id));
               navigate("/expandTask");
             }}

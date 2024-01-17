@@ -5,7 +5,7 @@ const taskSchema = mongoose.Schema(
     user: {
       type: mongoose.Schema.Types.ObjectId,
       required: true,
-      ref: "UserModel", // referring the model
+      ref: "UserModel", // referring the User collection
     },
     task: {
       type: String,

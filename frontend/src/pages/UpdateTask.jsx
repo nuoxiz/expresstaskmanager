@@ -1,5 +1,5 @@
 import UpdateTaskForm from "../components/UpdateTaskForm";
-const UpdateTask = ({ context }) => {
-  return <UpdateTaskForm context={context} />;
+const UpdateTask = () => {
+  return <UpdateTaskForm />;
 };
 export default UpdateTask;

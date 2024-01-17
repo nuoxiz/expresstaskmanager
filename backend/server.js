@@ -20,17 +20,17 @@ app.use(cors());
 app.use("/api/users", userRoutes);
 app.use("/api/tasks", taskRoutes);
 
-if (process.env.NODE_ENV === "production") {
-app.use(express.static(path.join(__dirname, "../frontend/build")));
-// "*" means any route aside from our api routes
-  app.get("*", (req, res) =>
-res.sendFile(
-path.resolve(__dirname, "../", "frontend", "build", "index.html")
-)
-  );
-} else {
-app.get("/", (req, res) => res.send("Please set to production"));
-}
+// if (process.env.NODE_ENV === "production") {
+// app.use(express.static(path.join(__dirname, "../frontend/build")));
+// // "*" means any route aside from our api routes
+//   app.get("*", (req, res) =>
+// res.sendFile(
+// path.resolve(__dirname, "../", "frontend", "build", "index.html")
+// )
+//   );
+// } else {
+// app.get("/", (req, res) => res.send("Please set to production"));
+// }
 
 //Use custom-made error handler to override the default handler
 app.use(errorHandler);

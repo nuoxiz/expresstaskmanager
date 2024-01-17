@@ -32,6 +32,9 @@ export const getAllTasks = createAsyncThunk(
     }
   }
 );
+
+
+
 /**
  * @desc GET a task
  * @route GET /api/tasks/:id
@@ -133,9 +136,6 @@ export const taskSlice = createSlice({
   reducers: {
     // for synchronous functions
     reset: (state) => {
-      // createSlice allow us to write mutating code and handle the 
-      // copying of the state for us and apply the following mutations
-      //  for us
       state.isLoading = false;
       state.isSuccess = false;
       state.isError = false;
@@ -159,7 +159,7 @@ export const taskSlice = createSlice({
       .addCase(getAllTasks.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = true;
-        // action.payload = return thunkAPI.rejectWithValue(message)
+        // action.payload = error message
         state.message = action.payload;
       })
       .addCase(deleteTask.pending, (state) => {

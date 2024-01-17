@@ -29,6 +29,15 @@ const Login = () => {
     }
     dispatch(reset());
   }, [user, isSuccess, isError, message, navigate, dispatch]);
+  
+  if (isLoading) {
+    return <Spinner />;
+  }
+
+
+
+
+
   const onType = (e) => {
     setInput((prevState) => ({
       ...prevState,
@@ -47,9 +56,11 @@ const Login = () => {
     };
     dispatch(login(userData));
   };
-  if (isLoading) {
-    return <Spinner />;
-  }
+
+
+  // if (isLoading) {
+  //   return <Spinner />;
+  // }
   return (
     <form className="form" onSubmit={onSubmit}>
       <h1>
