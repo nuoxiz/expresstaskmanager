@@ -11,9 +11,6 @@ import Spinner from "./Spinner";
 import { useEffect } from "react";
 const UpdateTaskForm = () => {
   const localStorageTask = JSON.parse(localStorage.getItem("fullTask"));
-  // const { task } = useSelector((state) => state.task);
-  // const localStorageTask = task;
-  console.log(localStorageTask);
   /**
    * @desc Format date to yyyy-mm-ddTHH:MM
    */
@@ -74,11 +71,11 @@ const UpdateTaskForm = () => {
     };
     dispatch(updateTask(updatedTask));
     // setShowUpdateForm(!showUpdateForm);
-    dispatch(changeShouldRerender());
+    // dispatch(changeShouldRerender());
     //call changeShouldRerender twice to ensure that the correct tasks are rendered
-    setTimeout(() => {
-      dispatch(changeShouldRerender());
-    }, 1);
+    // setTimeout(() => {
+    //   dispatch(changeShouldRerender());
+    // }, 1);
     toast.info(`Updated task: ${updatedTask.task}`, {
       position: "bottom-right",
       autoClose: 2000,

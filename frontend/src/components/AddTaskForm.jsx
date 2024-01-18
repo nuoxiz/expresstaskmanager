@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useDispatch} from "react-redux";
+import { useDispatch } from "react-redux";
 import { createTask, changeShouldRerender } from "../features/tasks/taskSlice";
 import { toast } from "react-toastify";
 const AddTaskForm = () => {
@@ -33,10 +33,10 @@ const AddTaskForm = () => {
       dueDateTime: "",
       isImportant: false,
     });
-    dispatch(changeShouldRerender());
-    setTimeout(() => {
-      dispatch(changeShouldRerender());
-    }, 1);
+    // dispatch(changeShouldRerender());
+    // setTimeout(() => {
+    //   dispatch(changeShouldRerender());
+    // }, 1);
   };
 
   return (
@@ -104,4 +104,3 @@ const AddTaskForm = () => {
   );
 };
 export default AddTaskForm;
-
