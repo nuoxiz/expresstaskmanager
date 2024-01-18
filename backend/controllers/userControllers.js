@@ -99,7 +99,7 @@ const loginUser = asyncHandler(async (req, res) => {
     }
     if (await bcrypt.compare(password, user.password)) {
       res.status(200).json({
-        _id: user._id,
+        // _id: user._id,
         name: user.name,
         email: user.email,
         token: generateToken(user._id),
@@ -188,7 +188,6 @@ const generateToken = (userId) => {
     expiresIn: "30d",
   });
 };
-
 
 const updateConfirmationCode = asyncHandler(async (userId, newData) => {
   try {
